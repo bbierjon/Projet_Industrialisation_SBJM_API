@@ -1,5 +1,7 @@
 // src/controllers/utilisateurController.js
 const {pool} = require('../config/dbConfig');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 exports.getAllUtilisateur = async (req, res) => {
     try {
@@ -15,9 +17,11 @@ exports.getAllUtilisateur = async (req, res) => {
 exports.createUtilisateur = async (req, res) => {
     const { identifiant, motDePasse, estSuperUtilisateur } = req.body;
     try {
+        const hashedPassword = await bcrypt.hash(motDePasse, saltRounds);
+
         const result = await pool.query(
             'INSERT INTO Utilisateur (identifiant, motDePasse, estSuperUtilisateur) VALUES (?, ?, ?)',
-            [identifiant, motDePasse, estSuperUtilisateur]
+            [identifiant, hashedPassword , estSuperUtilisateur]
         );
         // Convertir le résultat en chaîne de caractères si c'est un BigInt
         const id = result.insertId.toString();

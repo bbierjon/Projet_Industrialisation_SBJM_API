@@ -10,6 +10,9 @@ const equipementRoutes = require('./routes/equipementRoutes');
 const servicesRoutes = require('./routes/serviceRoutes')
 const secretairesRoutes = require('./routes/secretaireRoutes')
 const reservationLitRoutes = require('./routes/reservationLitRoutes');
+const authRoutes = require('./routes/authRoutes')
+const checkTokenMiddleware = require('./middleware/checkToken');
+const loggingMiddleware = require('./middleware/loggingMiddleware');
 
 require('dotenv').config();
 
@@ -20,18 +23,22 @@ testConnection();
 
 const app = express();
 
+app.use(loggingMiddleware);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use('/api/utilisateurs', utilisateurRoutes);
-app.use('/api/patients', patientRoutes);
-app.use('/api/infirmieres', infirmiereRoutes);
-app.use('/api/lits', litRoutes);
-app.use('/api/chambres', chambreRoutes);
-app.use('/api/equipements', equipementRoutes);
-app.use('/api/services', servicesRoutes);
-app.use('/api/secretaires', secretairesRoutes);
-app.use('/api/reservations', reservationLitRoutes);
+/* Route d'authentification */
+app.use('/api/auth', authRoutes);
+/* Routes protégées */
+app.use('/api/utilisateurs',checkTokenMiddleware, utilisateurRoutes);
+app.use('/api/patients',checkTokenMiddleware, patientRoutes);
+app.use('/api/infirmieres',checkTokenMiddleware, infirmiereRoutes);
+app.use('/api/lits',checkTokenMiddleware, litRoutes);
+app.use('/api/chambres',checkTokenMiddleware, chambreRoutes);
+app.use('/api/equipements',checkTokenMiddleware, equipementRoutes);
+app.use('/api/services',checkTokenMiddleware, servicesRoutes);
+app.use('/api/secretaires',checkTokenMiddleware, secretairesRoutes);
+app.use('/api/reservations',checkTokenMiddleware, reservationLitRoutes);
 
 
 
