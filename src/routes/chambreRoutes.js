@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const chambreController = require('../controllers/chambreController');
+const litController = require('../controllers/litController')
 
 // Route pour obtenir toutes les chambres
 router.get('/', chambreController.getAllChambres);
@@ -17,5 +18,7 @@ router.put('/:id', chambreController.updateChambre);
 
 // Route pour supprimer une chambre
 router.delete('/:id', chambreController.deleteChambre);
+
+router.get('/lits/:numeroChambre', litController.getBedByBedroomsId);
 
 module.exports = router;

@@ -55,3 +55,13 @@ exports.deleteLit = async (req, res) => {
         res.status(500).json({ message: 'Erreur lors de la suppression du lit', error: error.message });
     }
 };
+
+exports.getBedByBedroomsId = async (req, res) => {
+    try {
+        const { numeroChambre } = req.params;
+        const result = await pool.query('SELECT * FROM Lit WHERE numeroChambre = ?', [numeroChambre]);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: 'Erreur lors de la récupération des lits pour le service', error: error.message });
+    }
+};
