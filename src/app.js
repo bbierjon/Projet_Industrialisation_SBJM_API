@@ -1,6 +1,8 @@
 // src/app.js
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+const corsOptions = require('./config/corsConfig');
 const utilisateurRoutes = require('./routes/utilisateurRoutes');
 const patientRoutes = require('./routes/patientRoutes');
 const infirmiereRoutes = require('./routes/infirmiereRoutes');
@@ -22,7 +24,7 @@ const { testConnection } = require('./config/dbConfig');
 testConnection();
 
 const app = express();
-
+app.use(cors(corsOptions));
 app.use(loggingMiddleware);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -36,7 +38,7 @@ app.use('/api/infirmieres',checkTokenMiddleware, infirmiereRoutes);
 app.use('/api/lits',checkTokenMiddleware, litRoutes);
 app.use('/api/chambres',checkTokenMiddleware, chambreRoutes);
 app.use('/api/equipements',checkTokenMiddleware, equipementRoutes);
-app.use('/api/services',checkTokenMiddleware, servicesRoutes);
+app.use('/api/services', checkTokenMiddleware,servicesRoutes);
 app.use('/api/secretaires',checkTokenMiddleware, secretairesRoutes);
 app.use('/api/reservations',checkTokenMiddleware, reservationLitRoutes);
 

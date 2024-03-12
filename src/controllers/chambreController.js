@@ -64,3 +64,13 @@ exports.deleteChambre = async (req, res) => {
         res.status(500).json({ message: 'Erreur lors de la suppression de la chambre', error: error.message });
     }
 };
+
+exports.getChambresByServiceId = async (req, res) => {
+    try {
+        const { numeroService } = req.params;
+        const result = await pool.query('SELECT * FROM Chambre WHERE numeroService = ?', [numeroService]);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: 'Erreur lors de la récupération des chambres pour le service', error: error.message });
+    }
+};

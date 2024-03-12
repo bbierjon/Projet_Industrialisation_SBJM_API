@@ -26,11 +26,11 @@ exports.getPatientById = async (req, res) => {
 };
 
 exports.createPatient = async (req, res) => {
-    const { nomPatient, prenomPatient, numeroCarteVitale, numeroService, numeroUtilisateur } = req.body;
+    const { nomPatient, prenomPatient, numeroCarteVitale, numeroChambre, numeroUtilisateur } = req.body;
     try {
         const result = await pool.query(
-            'INSERT INTO Patient (nomPatient, prenomPatient, numeroCarteVitale, numeroService, numeroUtilisateur) VALUES (?, ?, ?, ?, ?)',
-            [nomPatient, prenomPatient, numeroCarteVitale, numeroService, numeroUtilisateur]
+            'INSERT INTO Patient (nomPatient, prenomPatient, numeroCarteVitale, numeroChambre, numeroUtilisateur) VALUES (?, ?, ?, ?, ?)',
+            [nomPatient, prenomPatient, numeroCarteVitale, numeroChambre, numeroUtilisateur]
         );
         // Convertir le résultat en chaîne de caractères si c'est un BigInt
         const id = result.insertId.toString();
@@ -44,9 +44,9 @@ exports.createPatient = async (req, res) => {
 
 
 exports.updatePatient = async (req, res) => {
-    const { nomPatient, prenomPatient, numeroCarteVitale, numeroService, numeroUtilisateur } = req.body;
+    const { nomPatient, prenomPatient, numeroCarteVitale, numeroChambre, numeroUtilisateur } = req.body;
     try {
-        await pool.query('UPDATE Patient SET nomPatient = ?, prenomPatient = ?, numeroCarteVitale = ?, numeroService = ?, numeroUtilisateur = ? WHERE numeroPatient = ?', [nomPatient, prenomPatient, numeroCarteVitale, numeroService, numeroUtilisateur, req.params.id]);
+        await pool.query('UPDATE Patient SET nomPatient = ?, prenomPatient = ?, numeroCarteVitale = ?, numeroChambre = ?, numeroUtilisateur = ? WHERE numeroPatient = ?', [nomPatient, prenomPatient, numeroCarteVitale, numeroChambre, numeroUtilisateur, req.params.id]);
         res.status(200).json({ message: 'Patient mis à jour avec succès' });
     } catch (error) {
         console.error(error);
