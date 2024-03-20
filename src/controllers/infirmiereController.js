@@ -1,6 +1,7 @@
 // src/controllers/infirmiereController.js
 const {pool} = require('../config/dbConfig');
 
+//Récupère toutes les infirmières
 exports.getAllInfirmieres = async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM Infirmiere');
@@ -10,6 +11,7 @@ exports.getAllInfirmieres = async (req, res) => {
     }
 };
 
+//Récupère une infirmière en fonction de son ID
 exports.getInfirmiereById = async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM Infirmiere WHERE numeroInfirmiere = ?', [req.params.id]);
@@ -19,7 +21,7 @@ exports.getInfirmiereById = async (req, res) => {
     }
 };
 
-
+//Crée une infirmière
 exports.createInfirmiere = async (req, res) => {
     const { nomInfirmiere, prenomInfirmiere, numeroService, numeroUtilisateur } = req.body;
     try {
@@ -36,7 +38,7 @@ exports.createInfirmiere = async (req, res) => {
     }
 };
 
-
+//Met à jour les informations d'une infirmière
 exports.updateInfirmiere = async (req, res) => {
     const { nomInfirmiere, prenomInfirmiere, numeroService, numeroUtilisateur } = req.body;
     try {
@@ -47,6 +49,7 @@ exports.updateInfirmiere = async (req, res) => {
     }
 };
 
+//Supprime une infirmière
 exports.deleteInfirmiere = async (req, res) => {
     try {
         await pool.query('DELETE FROM Infirmiere WHERE numeroInfirmiere = ?', [req.params.id]);

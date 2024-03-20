@@ -9,6 +9,7 @@ dotenv.config(); // Charger les variables d'environnement à partir d'un fichier
 exports.login = async (req, res) => {
     const { identifiant, motDePasse } = req.body;
 
+    // Vérifie qu'un identifiant et un mot de passe ont été rentrés
     if (!identifiant || !motDePasse) {
         return res.status(400).json({ message: 'Identifiant ou mot de passe manquant' });
     }
@@ -26,9 +27,10 @@ exports.login = async (req, res) => {
         const user = results[0];
 
         // Comparaison des mots de passe
-
         const isPasswordValid = await bcrypt.compare(motDePasse, user.motDePasse);
         console.log(isPasswordValid);
+
+        //Vérification de la validité du mot de passe
         if (!isPasswordValid) {
             return res.status(401).json({ message: 'Mot de passe incorrect' });
         }
@@ -42,6 +44,7 @@ exports.login = async (req, res) => {
             pool.query('SELECT * FROM Patient WHERE numeroUtilisateur = ?', [user.numeroUtilisateur]),
         ]);
 
+        //Vérifie le role de l'utilisateur
         if (infirmieresRows.length > 0) {
             role = 'infirmiere';
         } else if (secretairesRows.length > 0) {

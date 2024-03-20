@@ -1,6 +1,7 @@
 // src/controllers/chambreController.js
 const {pool} = require('../config/dbConfig');
 
+//Récupère toutes les chambres
 exports.getAllChambres = async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM Chambre');
@@ -10,6 +11,7 @@ exports.getAllChambres = async (req, res) => {
     }
 };
 
+//Récupère une chambre en fonction de l'ID
 exports.getChambreById = async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM Chambre WHERE numeroChambre = ?', [req.params.id]);
@@ -29,6 +31,7 @@ exports.getChambreById = async (req, res) => {
     }
 };*/
 
+//Crée une nouvelle chambre
 exports.createChambre = async (req, res) => {
     const { numeroService, numeroEquipement } = req.body;
     try {
@@ -45,7 +48,7 @@ exports.createChambre = async (req, res) => {
     }
 };
 
-
+//Met à jour les informations d'une chambre
 exports.updateChambre = async (req, res) => {
     const { numeroService, numeroEquipement } = req.body;
     try {
@@ -56,6 +59,7 @@ exports.updateChambre = async (req, res) => {
     }
 };
 
+//Supprime une chambre
 exports.deleteChambre = async (req, res) => {
     try {
         await pool.query('DELETE FROM Chambre WHERE numeroChambre = ?', [req.params.id]);
@@ -65,6 +69,7 @@ exports.deleteChambre = async (req, res) => {
     }
 };
 
+//Récupère les chambres d'un service
 exports.getChambresByServiceId = async (req, res) => {
     try {
         const { numeroService } = req.params;

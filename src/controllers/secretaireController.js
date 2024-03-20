@@ -1,6 +1,7 @@
 // src/controllers/secretaireController.js
 const {pool} = require('../config/dbConfig');
 
+//Récupère tous les secretaires
 exports.getAllSecretaires = async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM Secretaire');
@@ -10,6 +11,7 @@ exports.getAllSecretaires = async (req, res) => {
     }
 };
 
+//Récupère un secretaire via son id
 exports.getSecretaireById = async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM Secretaire WHERE numeroSecretaire = ?', [req.params.id]);
@@ -31,6 +33,7 @@ exports.createSecretaire = async (req, res) => {
 };
 */
 
+//Crée un nouveau secretaire
 exports.createSecretaire = async (req, res) => {
     const { nomSecretaire, prenomSecretaire, numeroUtilisateur } = req.body;
     try {
@@ -47,9 +50,7 @@ exports.createSecretaire = async (req, res) => {
     }
 };
 
-
-
-
+//Met à jour les informations d'un secretaire
 exports.updateSecretaire = async (req, res) => {
     const { nomSecretaire, prenomSecretaire, numeroUtilisateur } = req.body;
     try {
@@ -60,6 +61,7 @@ exports.updateSecretaire = async (req, res) => {
     }
 };
 
+//Supprime un secretaire
 exports.deleteSecretaire = async (req, res) => {
     try {
         await pool.query('DELETE FROM Secretaire WHERE numeroSecretaire = ?', [req.params.id]);

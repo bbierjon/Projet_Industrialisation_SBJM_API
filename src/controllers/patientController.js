@@ -1,6 +1,7 @@
 // src/controllers/patientController.js
 const {pool} = require('../config/dbConfig');
 
+//Récupère tous les patients
 exports.getAllPatients = async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM Patient');
@@ -11,6 +12,7 @@ exports.getAllPatients = async (req, res) => {
     }
 };
 
+//Récupère un patient en fonction de son ID
 exports.getPatientById = async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM Patient WHERE numeroPatient = ?', [req.params.id]);
@@ -25,6 +27,7 @@ exports.getPatientById = async (req, res) => {
     }
 };
 
+//Crée un patient
 exports.createPatient = async (req, res) => {
     const { nomPatient, prenomPatient, numeroCarteVitale, numeroChambre, numeroUtilisateur } = req.body;
     try {
@@ -41,8 +44,7 @@ exports.createPatient = async (req, res) => {
     }
 };
 
-
-
+//Met à jour les informations d'un patient
 exports.updatePatient = async (req, res) => {
     const { nomPatient, prenomPatient, numeroCarteVitale, numeroChambre, numeroUtilisateur } = req.body;
     try {
@@ -54,6 +56,7 @@ exports.updatePatient = async (req, res) => {
     }
 };
 
+//Supprime un patient
 exports.deletePatient = async (req, res) => {
     try {
         await pool.query('DELETE FROM Patient WHERE numeroPatient = ?', [req.params.id]);

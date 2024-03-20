@@ -3,7 +3,8 @@ const {pool} = require('../config/dbConfig');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-exports.getAllUtilisateur = async (req, res) => {
+//Récupère tous les utilisateurs
+exports.getAllUtilisateurs = async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM Utilisateur');
         res.status(200).json(result);
@@ -13,7 +14,7 @@ exports.getAllUtilisateur = async (req, res) => {
     }
 };
 
-
+//Crée un utilisateur
 exports.createUtilisateur = async (req, res) => {
     const { identifiant, motDePasse, estSuperUtilisateur } = req.body;
     try {
@@ -32,8 +33,7 @@ exports.createUtilisateur = async (req, res) => {
     }
 };
 
-
-
+//Récupère un utilisateur via son ID
 exports.getUtilisateur = async (req, res) => {
     let { userId } = req.params;
     try {
@@ -44,6 +44,7 @@ exports.getUtilisateur = async (req, res) => {
     }
 };
 
+//Met à jour les informations d'un utilisateur
 exports.updateUtilisateur = async (req, res) => {
     let { userId } = req.params;
     let { identifiant, motDePasse, estSuperUtilisateur } = req.body;
@@ -58,6 +59,7 @@ exports.updateUtilisateur = async (req, res) => {
     }
 };
 
+//Supprime un utilisateur
 exports.deleteUtilisateur = async (req, res) => {
     let { userId } = req.params;
     try {
@@ -67,5 +69,3 @@ exports.deleteUtilisateur = async (req, res) => {
         res.status(500).send({ message: 'Erreur lors de la suppression de l’utilisateur', error });
     }
 };
-
-

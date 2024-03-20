@@ -1,6 +1,7 @@
 // src/controllers/litController.js
 const {pool} = require('../config/dbConfig');
 
+//Récupère tous les lits
 exports.getAllLits = async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM Lit');
@@ -10,6 +11,7 @@ exports.getAllLits = async (req, res) => {
     }
 };
 
+//Récupère un lit en fonction de son ID
 exports.getLitById = async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM Lit WHERE numeroLit = ?', [req.params.id]);
@@ -19,7 +21,7 @@ exports.getLitById = async (req, res) => {
     }
 };
 
-
+//Crée un nouveau lit
 exports.createLit = async (req, res) => {
     const { estVirtuel, estReserve, numeroChambre, numeroPatient } = req.body;
     try {
@@ -36,7 +38,7 @@ exports.createLit = async (req, res) => {
     }
 };
 
-
+//Met à jour les informations d'un lit
 exports.updateLit = async (req, res) => {
     const { estVirtuel, estReserve, numeroChambre, numeroPatient } = req.body;
     try {
@@ -47,6 +49,7 @@ exports.updateLit = async (req, res) => {
     }
 };
 
+//Supprime un lit
 exports.deleteLit = async (req, res) => {
     try {
         await pool.query('DELETE FROM Lit WHERE numeroLit = ?', [req.params.id]);
@@ -56,6 +59,7 @@ exports.deleteLit = async (req, res) => {
     }
 };
 
+//Récupère les lits d'une chambre
 exports.getBedByBedroomsId = async (req, res) => {
     try {
         const { numeroChambre } = req.params;

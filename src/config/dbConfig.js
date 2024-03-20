@@ -1,6 +1,7 @@
 const mariadb = require('mariadb');
 require('dotenv').config();
 
+//Configuration de la base de données
 const pool = mariadb.createPool({
     host: process.env.DB_HOST,
     port:process.env.DB_PORT,
@@ -10,6 +11,7 @@ const pool = mariadb.createPool({
     connectionLimit: 5
 });
 
+//Verification de la connexion
 const testConnection = async () => {
     let conn;
     try {
@@ -22,5 +24,5 @@ const testConnection = async () => {
     }
 };
 
-
+//Exportation de la configuration
 module.exports = { pool, testConnection };

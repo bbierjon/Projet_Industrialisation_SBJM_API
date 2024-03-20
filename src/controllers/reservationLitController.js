@@ -3,6 +3,7 @@ const {pool} = require('../config/dbConfig');
 
 /*Récupération de toutes les réservations*/
 
+//Récupère toutes les réservations
 exports.getAllReservations = async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM Reservation');
@@ -12,6 +13,7 @@ exports.getAllReservations = async (req, res) => {
     }
 };
 
+//Récupère une réservation via son ID
 exports.getReservationById = async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM Reservation WHERE numeroReservation = ?', [req.params.id]);
@@ -21,6 +23,7 @@ exports.getReservationById = async (req, res) => {
     }
 };
 
+//Crée une nouvelle reservation 
 exports.createReservation = async (req, res) => {
     const dateDebut = new Date(req.body.dateDebut).toISOString().slice(0, 19).replace('T', ' ');
     const dateFin = new Date(req.body.dateFin).toISOString().slice(0, 19).replace('T', ' ');
@@ -39,7 +42,7 @@ exports.createReservation = async (req, res) => {
     }
 };
 
-
+//Met à jour les informations d'une réservation
 exports.updateReservation = async (req, res) => {
     const dateDebut = new Date(req.body.dateDebut).toISOString().slice(0, 19).replace('T', ' ');
     const dateFin = new Date(req.body.dateFin).toISOString().slice(0, 19).replace('T', ' ');
@@ -52,6 +55,7 @@ exports.updateReservation = async (req, res) => {
     }
 };
 
+//Supprime une réservation
 exports.deleteReservation = async (req, res) => {
     try {
         await pool.query('DELETE FROM Reservation WHERE numeroReservation = ?', [req.params.id]);

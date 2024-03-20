@@ -1,6 +1,8 @@
 // src/controllers/serviceController.js
 const {pool} = require('../config/dbConfig');
 
+
+//Récupère tous les services
 exports.getAllServices = async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM Service');
@@ -10,6 +12,7 @@ exports.getAllServices = async (req, res) => {
     }
 };
 
+//Récupère un service en fonction de son ID
 exports.getServiceById = async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM Service WHERE numeroService = ?', [req.params.id]);
@@ -19,6 +22,7 @@ exports.getServiceById = async (req, res) => {
     }
 };
 
+//Crée un nouveau service
 exports.createService = async (req, res) => {
     const { nomService } = req.body;
     try {
@@ -35,7 +39,7 @@ exports.createService = async (req, res) => {
     }
 };
 
-
+//Met à jour les informations d'un service
 exports.updateService = async (req, res) => {
     const { nomService } = req.body;
     try {
@@ -46,6 +50,7 @@ exports.updateService = async (req, res) => {
     }
 };
 
+//Supprime un service
 exports.deleteService = async (req, res) => {
     try {
         await pool.query('DELETE FROM Service WHERE numeroService = ?', [req.params.id]);

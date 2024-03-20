@@ -1,6 +1,7 @@
 // src/controllers/equipementController.js
 const {pool} = require('../config/dbConfig');
 
+//Récupère tous les types d'équipements
 exports.getAllEquipements = async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM Equipement');
@@ -10,6 +11,7 @@ exports.getAllEquipements = async (req, res) => {
     }
 };
 
+//Récupère un équipement via son ID
 exports.getEquipementById = async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM Equipement WHERE numeroEquipement = ?', [req.params.id]);
@@ -19,7 +21,7 @@ exports.getEquipementById = async (req, res) => {
     }
 };
 
-
+//Crée un nouvel équipement
 exports.createEquipement = async (req, res) => {
     const { nomEquipement, numeroService } = req.body;
     try {
@@ -36,7 +38,7 @@ exports.createEquipement = async (req, res) => {
     }
 };
 
-
+//Met à jour les informations d'un équipement
 exports.updateEquipement = async (req, res) => {
     const { nomEquipement, numeroService } = req.body;
     try {
@@ -47,6 +49,7 @@ exports.updateEquipement = async (req, res) => {
     }
 };
 
+//Supprime un équipement
 exports.deleteEquipement = async (req, res) => {
     try {
         await pool.query('DELETE FROM Equipement WHERE numeroEquipement = ?', [req.params.id]);
